@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'IAM Role designed for Volumez Auto Provisioning Service. This role grants permissions for the service to assume the role, enabling it to create EC2 launch templates and instances.'
+
+Resources:
+  CrossAccountRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: 'VolumezAutoProvisioningRole'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - 'arn:aws:iam::225810133168:root'
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: 'VolumezAutoProvisioningEC2Policy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'ec2:CreateLaunchTemplate'
+                  - 'ec2:CreateLaunchTemplateVersion'
+                  - 'ec2:DescribeLaunchTemplates'
+                  - 'ec2:DescribeLaunchTemplateVersions'
+                  - 'ec2:RunInstances'
+                Resource: '*'
+
+Outputs:
+  RoleARN:
+    Description: 'The ARN of the role that was created.'
+    Value: !GetAtt CrossAccountRole.Arn
