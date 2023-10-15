@@ -19,6 +19,7 @@ fi
 
 # Deploy the CloudFormation template
 echo "Deploying Volumez CloudFormation stack..."
+echo $TEMPLATE_URL
 aws cloudformation create-stack --stack-name $STACK_NAME --template-url $TEMPLATE_URL --capabilities CAPABILITY_NAMED_IAM --region $REGION
 
 # Wait for the stack to be created
