@@ -7,7 +7,7 @@ if ! command -v aws &> /dev/null; then
 fi
 
 # Parameters
-TEMPLATE_URL="https://github.com/Jdaka/jay-volumez-test/blob/main/cross-account-role.yaml"
+TEMPLATE_URL="https://raw.githubusercontent.com/Jdaka/jay-volumez-test/main/cross-account-role.yaml"
 STACK_NAME="Volumez-Create-Role-Stack"
 
 # Use provided region or prompt the user
