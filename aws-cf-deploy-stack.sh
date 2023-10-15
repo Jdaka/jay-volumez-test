@@ -10,11 +10,11 @@ fi
 TEMPLATE_URL="https://github.com/Jdaka/jay-volumez-test/blob/main/cross-account-role.yaml"
 STACK_NAME="Volumez-Create-Role-Stack"
 
-# Check if REGION is passed as an argument, if not, prompt the user
-if [ -z "$1" ]; then
-    read -p "Please enter the AWS region (e.g., us-east-1): " REGION
-else
-    REGION=$1
+# Use provided region or prompt the user
+REGION="${1:-}"
+if [ -z "$REGION" ]; then
+    echo "No region provided. Exiting."
+    exit 1
 fi
 
 # Deploy the CloudFormation template
