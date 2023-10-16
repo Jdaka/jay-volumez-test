@@ -10,17 +10,16 @@ fi
 TEMPLATE_URL="https://raw.githubusercontent.com/Jdaka/jay-volumez-test/main/cross-account-role.yaml"
 STACK_NAME="Volumez-Create-Role-Stack"
 
-# Use provided region or prompt the user
-REGION="${1:-}"
-if [ -z "$REGION" ]; then
-    echo "No region provided. Exiting."
-    exit 1
+# Check if REGION is passed as an argument, if not, prompt the user
+if [ -z "$1" ]; then
+    read -p "Please enter the AWS region (e.g., us-east-1): " REGION
+else
+    REGION=$1
 fi
 
 # Deploy the CloudFormation template
 echo "Deploying Volumez CloudFormation stack..."
-echo $TEMPLATE_URL
-aws cloudformation create-stack --stack-name $STACK_NAME --template-body file://cross-account-role.yaml --capabilities CAPABILITY_NAMED_IAM --region $REGION
+aws cloudformation create-stack --stack-name $STACK_NAME --template-url $TEMPLATE_URL --capabilities CAPABILITY_NAMED_IAM --region $REGION
 
 # Wait for the stack to be created
 echo "Waiting for stack to be created..."
@@ -31,3 +30,4 @@ ROLE_ARN=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region 
 
 echo "Stack created successfully!"
 echo "Role ARN: $ROLE_ARN"
+
